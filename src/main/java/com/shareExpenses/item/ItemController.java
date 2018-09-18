@@ -3,12 +3,11 @@ package com.shareExpenses.item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.Set;
 
 @RestController
 @RequestMapping("/api/items")
-public class ItemController {
+class ItemController {
 
     private ItemService itemService;
 
@@ -18,18 +17,22 @@ public class ItemController {
     }
 
     @PostMapping
-    ItemDto createItem(@RequestBody ItemDto itemDto) {
-        return itemService.create(itemDto);
+    ItemCreateDto create(@RequestBody ItemCreateDto itemCreateDto) {
+        return itemService.create(itemCreateDto);
     }
 
     @GetMapping
-    Set<ItemDto> findAll() {
+    Set<ItemDto> getAllItems() {
         return itemService.findAll();
+    }
+
+    @GetMapping("/{uuid}")
+    ItemDto findOneByUuid(@PathVariable String uuid) {
+        return itemService.findOneByUuid(uuid);
     }
 
     @DeleteMapping("/{uuid}")
     void delete(@PathVariable String uuid) {
         itemService.delete(uuid);
     }
-
 }

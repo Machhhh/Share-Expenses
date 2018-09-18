@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/donations")
+@RequestMapping("/api/donations")
 public class DonationController {
 
     private DonationService donationService;
@@ -35,5 +35,4 @@ public class DonationController {
     void delete(@PathVariable String uuid) {
         donationService.deleteByUuid(uuid);
     }
-
 }

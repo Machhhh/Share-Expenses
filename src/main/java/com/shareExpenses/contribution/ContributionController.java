@@ -1,15 +1,14 @@
 package com.shareExpenses.contribution;
 
 
-import com.shareExpenses.participant.ParticipantDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
 @RestController
-@RequestMapping("/contribution")
-public class ContributionController {
+@RequestMapping("/api/contributions")
+class ContributionController {
 
     private ContributionService contributionService;
 
@@ -37,5 +36,4 @@ public class ContributionController {
     void delete(@PathVariable String uuid) {
         contributionService.deleteByUuid(uuid);
     }
-
 }

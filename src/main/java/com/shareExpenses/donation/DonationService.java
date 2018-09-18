@@ -2,8 +2,7 @@ package com.shareExpenses.donation;
 
 import java.util.Set;
 
-
-public interface DonationService {
+interface DonationService {
 
     Set<DonationDto> findAll();
 
@@ -14,5 +13,4 @@ public interface DonationService {
     DonationCreateDto create(DonationCreateDto dto);
 
     void deleteByUuid(String uuid);
-
 }

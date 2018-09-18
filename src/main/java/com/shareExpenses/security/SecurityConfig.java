@@ -1,4 +1,4 @@
-package com.shareExpenses.configuration;
+package com.shareExpenses.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;

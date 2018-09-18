@@ -8,7 +8,7 @@ interface BillService {
 
     BillDto findOneByUuid(String uuid);
 
-    BillDto create(BillDto dto);
+    BillCreateDto create(BillCreateDto billCreateDto);
 
     void deleteByUuid(String uuid);
 }

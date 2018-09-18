@@ -1,23 +1,26 @@
 package com.shareExpenses.item;
 
-import org.springframework.stereotype.Component;
+import com.shareExpenses.bill.BillFacade;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.Collection;
 import java.util.Set;
 
-@Component
+@AllArgsConstructor
+@Getter
 public class ItemFacade {
 
     private ItemRepository itemRepository;
     private ItemMapper itemMapper;
+    private BillFacade billFacade;
 
-    public ItemFacade(ItemRepository itemRepository, ItemMapper itemMapper) {
-        this.itemRepository = itemRepository;
-        this.itemMapper = itemMapper;
+    public Item getItemByUuid(String uuid) {
+        return itemRepository.findByUuid(uuid);
     }
 
     public ItemDto getItemDtoByUuid(String uuid) {
-        return itemMapper.toItemDto(itemRepository.findOneByUuid(uuid));
+        return itemMapper.toItemDto(itemRepository.findByUuid(uuid));
     }
 
     public ItemDto getItemDtoByName(String name) {

@@ -1,4 +1,4 @@
-package com.shareExpenses.configuration;
+package com.shareExpenses.common;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

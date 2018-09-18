@@ -1,10 +1,14 @@
 package com.shareExpenses.item;
 
+import com.shareExpenses.bill.Bill;
+import com.shareExpenses.common.BaseEntity;
+import com.shareExpenses.contribution.Contribution;
 import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.Set;
 
 @Builder(builderMethodName = "create")
 @Entity
@@ -12,11 +16,10 @@ import java.util.HashSet;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Item {
+public class Item extends BaseEntity {
 
     @Id
     @GeneratedValue
-    @Setter(AccessLevel.PROTECTED)
     private Long id;
     private String name;
     private BigDecimal price;

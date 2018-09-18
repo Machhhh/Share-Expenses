@@ -1,17 +1,17 @@
 package com.shareExpenses.contribution;
 
-import com.shareExpenses.item.Item;
-import com.shareExpenses.participant.Participant;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContributionCreateDto {
 
-    private Item item;
-    private Participant participant;
+    private String participantUuid;
+    private String itemUuid;
+    private String billNumber;
 }

@@ -1,34 +1,30 @@
 package com.shareExpenses.donation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+
+import com.shareExpenses.bill.BillFacade;
+import com.shareExpenses.participant.ParticipantFacade;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.Set;
 
-@Component
+@AllArgsConstructor
+@Getter
 public class DonationFacade {
+
     private DonationRepository donationRepository;
     private DonationMapper donationMapper;
-
-    @Autowired
-    public DonationFacade(DonationRepository donationRepository,
-                             DonationMapper donationMapper) {
-        this.donationRepository = donationRepository;
-        this.donationMapper = donationMapper;
-    }
+    private BillFacade billFacade;
+    private ParticipantFacade participantFacade;
 
     public DonationDto getDonationDtoByUuid(String uuid) {
         return donationMapper.toDonationDto(donationRepository.findByUuid(uuid));
     }
 
-    public DonationDto getDonationDtoByName(String name) {
-        return donationMapper.toDonationDto(donationRepository.findByName(name));
-    }
-
-    public Set<DonationDto> getParticipantDtoSet() {
+    public Set<DonationDto> getDonationDtoSet() {
         return donationMapper.toDonationDtoSet(donationRepository.findAllBy());
     }
 
-    public Set<DonationDto> getParticipantDtoSetByBillUuid(String billUuid) {
+    public Set<DonationDto> getDonationDtoSetByBillUuid(String billUuid) {
         return donationMapper.toDonationDtoSet(donationRepository.findAllByBill_Uuid(billUuid));
     }
 }
