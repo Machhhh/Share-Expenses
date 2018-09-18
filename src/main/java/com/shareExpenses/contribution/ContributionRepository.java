@@ -12,8 +12,6 @@ interface ContributionRepository extends CrudRepository <Contribution,Long> {
 
     Contribution findByUuid(String uuid);
 
-    Contribution findByName(String name);
-
     Set<Contribution> findAllByBill_Uuid(String uuid);
 
     void deleteByUuid(String uuid);

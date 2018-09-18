@@ -1,4 +1,4 @@
-package com.shareExpenses.participant;
+package com.shareExpenses.bill;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ParticipantCreateDto {
+public class BillCreateDto {
 
     private String name;
-    private String billNumber;
 }

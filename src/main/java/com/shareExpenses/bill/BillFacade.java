@@ -1,21 +1,16 @@
 package com.shareExpenses.bill;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.Set;
 
-@Component
+@AllArgsConstructor
+@Getter
 public class BillFacade {
 
     private BillRepository billRepository;
     private BillMapper billMapper;
-
-    @Autowired
-    public BillFacade(BillRepository billRepository, BillMapper billMapper) {
-        this.billRepository = billRepository;
-        this.billMapper = billMapper;
-    }
 
     public Bill getBillByUuid(String uuid) {
         return billRepository.findByUuid(uuid);
@@ -34,6 +29,6 @@ public class BillFacade {
     }
 
     public Set<BillDto> getBillDtoSet() {
-        return billMapper.toBillDtoSet(billRepository.findAllBy());
+        return billMapper.toBillDtoSet(billRepository.findAll());
     }
 }

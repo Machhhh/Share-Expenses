@@ -2,8 +2,13 @@ package com.shareExpenses.item;
 
 import java.util.Set;
 
-public interface ItemService {
-    ItemDto create(ItemDto itemDto);
+interface ItemService {
+
+    ItemCreateDto create(ItemCreateDto itemCreateDto);
+
     Set<ItemDto> findAll();
+
+    ItemDto findOneByUuid(String uuid);
+
     void delete(String uuid);
 }

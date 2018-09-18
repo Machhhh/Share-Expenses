@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Service
 @Transactional
-public class BillServiceImpl implements BillService {
+class BillServiceImpl implements BillService {
 
     private BillMapper billMapper;
     private BillRepository billRepository;
@@ -21,7 +21,7 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public Set<BillDto> findAll() {
-        return billMapper.toBillDtoSet(billRepository.findAllBy());
+        return billMapper.toBillDtoSet(billRepository.findAll());
     }
 
     @Override
@@ -30,8 +30,13 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public BillDto create(BillDto dto) {
-        return null;
+    public BillCreateDto create(BillCreateDto dto) {
+        Bill bill = Bill.create()
+                .name(dto.getName())
+                .build();
+        billRepository.save(bill);
+        bill.setLinkName("bill=" + bill.getName() + bill.getUuid().substring(0, 5));
+        return billMapper.toBillCreateDto(billRepository.save(bill));
     }
 
     @Override

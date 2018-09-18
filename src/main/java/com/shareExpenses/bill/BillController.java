@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/bills")
-public class BillController {
+@RequestMapping("/api/bills")
+class BillController {
 
     private BillService billService;
 
@@ -17,8 +17,8 @@ public class BillController {
     }
 
     @PostMapping
-    BillDto create(@RequestBody BillDto billDto) {
-        return billService.create(billDto);
+    BillCreateDto create(@RequestBody BillCreateDto billCreateDto) {
+        return billService.create(billCreateDto);
     }
 
     @GetMapping

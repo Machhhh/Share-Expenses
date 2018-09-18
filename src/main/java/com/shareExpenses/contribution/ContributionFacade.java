@@ -1,31 +1,28 @@
 package com.shareExpenses.contribution;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import com.shareExpenses.bill.BillFacade;
+import com.shareExpenses.item.ItemFacade;
+import com.shareExpenses.participant.ParticipantFacade;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.Set;
-public class ContributionFacade {
 
+@AllArgsConstructor
+@Getter
+public class ContributionFacade {
 
     private ContributionRepository contributionRepository;
     private ContributionMapper contributionMapper;
+    private BillFacade billFacade;
+    private ParticipantFacade participantFacade;
+    private ItemFacade itemFacade;
 
-    @Autowired
-
-    public ContributionFacade(ContributionRepository contributionRepository, ContributionMapper contributionMapper) {
-        this.contributionRepository = contributionRepository;
-        this.contributionMapper = contributionMapper;
-    }
     public ContributionDto getContributionDtoByUuid(String uuid) {
         return contributionMapper.toContributionDto(contributionRepository.findByUuid(uuid));
-    }
-
-    public ContributionDto getContributionDtoByName(String name) {
-        return contributionMapper.toContributionDto(contributionRepository.findByName(name));
     }
 
     public Set<ContributionDto> getContributionDtoSet() {
         return contributionMapper.toContributionDtoSet(contributionRepository.findAllBy());
     }
-
 }
