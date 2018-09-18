@@ -17,5 +17,4 @@ interface BillRepository extends CrudRepository<Bill, Long> {
     Bill findByLinkName(String linkName);
 
     void deleteByUuid(String uuid);
-
 }

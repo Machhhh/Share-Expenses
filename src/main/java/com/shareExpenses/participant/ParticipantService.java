@@ -8,6 +8,10 @@ interface ParticipantService {
 
     ParticipantDto findOneByUuid(String uuid);
 
+    Participant findByUuid(String uuid);
+
+    ParticipantDto findByname(String name);
+
     Set<ParticipantDto> findAllByBillUuid(String uuid);
 
     ParticipantCreateDto create(ParticipantCreateDto dto);

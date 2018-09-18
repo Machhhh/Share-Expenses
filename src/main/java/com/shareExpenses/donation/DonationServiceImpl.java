@@ -1,7 +1,9 @@
 package com.shareExpenses.donation;
 
 import com.shareExpenses.bill.Bill;
+import com.shareExpenses.bill.BillFacade;
 import com.shareExpenses.participant.Participant;
+import com.shareExpenses.participant.ParticipantFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,22 +16,24 @@ class DonationServiceImpl implements DonationService {
 
     private DonationMapper donationMapper;
     private DonationRepository donationRepository;
-    private DonationFacade donationFacade;
+    private BillFacade billFacade;
+    private ParticipantFacade participantFacade;
 
     @Autowired
     public DonationServiceImpl(DonationRepository donationRepository,
                                DonationMapper donationMapper,
-                               DonationFacade donationFacade) {
+                               BillFacade billFacade,
+                               ParticipantFacade participantFacade) {
         this.donationMapper = donationMapper;
         this.donationRepository = donationRepository;
-        this.donationFacade = donationFacade;
+        this.billFacade = billFacade;
+        this.participantFacade = participantFacade;
     }
 
     @Override
     public DonationCreateDto create(DonationCreateDto dto) {
-        Bill bill = donationFacade.getBillFacade().getBillByUuid(dto.getBillNumber());
-        Participant participant = donationFacade.getParticipantFacade()
-                .getParticipantByUuid(dto.getParticipantUuid());
+        Bill bill = billFacade.getBillByUuid(dto.getBillNumber());
+        Participant participant = participantFacade.getParticipantByUuid(dto.getParticipantUuid());
         Donation donation = Donation.create()
                 .bill(bill)
                 .participant(participant)

@@ -1,6 +1,7 @@
 package com.shareExpenses.item;
 
 import com.shareExpenses.bill.Bill;
+import com.shareExpenses.bill.BillFacade;
 import com.shareExpenses.exceptions.BillNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,19 +15,19 @@ class ItemServiceImpl implements ItemService {
 
     private ItemRepository itemRepository;
     private ItemMapper itemMapper;
-    private ItemFacade itemFacade;
+    private BillFacade billFacade;
 
     @Autowired
     public ItemServiceImpl(ItemRepository itemRepository, ItemMapper itemMapper,
-                           ItemFacade itemFacade) {
+                           BillFacade billFacade) {
         this.itemRepository = itemRepository;
         this.itemMapper = itemMapper;
-        this.itemFacade = itemFacade;
+        this.billFacade = billFacade;
     }
 
     @Override
     public ItemCreateDto create(ItemCreateDto dto) {
-        Bill bill = itemFacade.getBillFacade().getBillByUuid(dto.getBillNumber());
+        Bill bill = billFacade.getBillByUuid(dto.getBillNumber());
         if (bill == null) {
             throw new BillNotFoundException(dto.getBillNumber());
         }
@@ -36,6 +37,21 @@ class ItemServiceImpl implements ItemService {
                 .price(dto.getPrice())
                 .build();
         return itemMapper.toItemCreateDto(itemRepository.save(item));
+    }
+
+    @Override
+    public Item findByUuid(String uuid) {
+        return itemRepository.findByUuid(uuid);
+    }
+
+    @Override
+    public Set<ItemDto> findAllByBillUuid(String uuid) {
+        return itemMapper.toItemDtoSet(itemRepository.findAllByBillUuid(uuid));
+    }
+
+    @Override
+    public ItemDto findOneByName(String name) {
+        return itemMapper.toItemDto(itemRepository.findOneByName(name));
     }
 
     @Override

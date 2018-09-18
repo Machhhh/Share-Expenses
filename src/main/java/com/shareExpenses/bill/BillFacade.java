@@ -9,26 +9,25 @@ import java.util.Set;
 @Getter
 public class BillFacade {
 
-    private BillRepository billRepository;
-    private BillMapper billMapper;
+    private BillService billService;
 
     public Bill getBillByUuid(String uuid) {
-        return billRepository.findByUuid(uuid);
+        return billService.findByUuid(uuid);
     }
 
     public BillDto getBillDtoByName(String name) {
-        return billMapper.toBillDto(billRepository.findByName(name));
+        return billService.getBillDtoByName(name);
     }
 
     public BillDto getBillDtoByUuid(String uuid) {
-        return billMapper.toBillDto(billRepository.findByUuid(uuid));
+        return billService.findOneByUuid(uuid);
     }
 
     public BillDto getBillDtoByLinkName(String linkName) {
-        return billMapper.toBillDto(billRepository.findByLinkName(linkName));
+        return billService.findByLinkName(linkName);
     }
 
     public Set<BillDto> getBillDtoSet() {
-        return billMapper.toBillDtoSet(billRepository.findAll());
+        return billService.findAll();
     }
 }

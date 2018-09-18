@@ -1,6 +1,5 @@
 package com.shareExpenses.participant;
 
-import com.shareExpenses.bill.BillFacade;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -8,9 +7,7 @@ import org.springframework.context.annotation.Configuration;
 class ParticipantConfig {
 
     @Bean
-    ParticipantFacade participantFacade(ParticipantRepository repository,
-                                        ParticipantMapper participantMapper,
-                                        BillFacade billFacade) {
-        return new ParticipantFacade(repository, participantMapper, billFacade);
+    ParticipantFacade participantFacade(ParticipantService participantService) {
+        return new ParticipantFacade(participantService);
     }
 }
