@@ -1,5 +1,7 @@
 package com.shareExpenses.bill;
 
+import com.shareExpenses.item.ItemFacade;
+import com.shareExpenses.participant.ParticipantFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,21 @@ class BillServiceImpl implements BillService {
     @Override
     public BillDto findOneByUuid(String uuid) {
         return billMapper.toBillDto(billRepository.findByUuid(uuid));
+    }
+
+    @Override
+    public Bill findByUuid(String uuid) {
+        return billRepository.findByUuid(uuid);
+    }
+
+    @Override
+    public BillDto findByLinkName(String linkName) {
+        return billMapper.toBillDto(billRepository.findByLinkName(linkName));
+    }
+
+    @Override
+    public BillDto getBillDtoByName(String name) {
+        return billMapper.toBillDto(billRepository.findByName(name));
     }
 
     @Override

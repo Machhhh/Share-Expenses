@@ -1,6 +1,7 @@
 package com.shareExpenses.participant;
 
 import com.shareExpenses.bill.Bill;
+import com.shareExpenses.bill.BillFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,25 +14,35 @@ class ParticipantServiceImpl implements ParticipantService {
 
     private ParticipantMapper participantMapper;
     private ParticipantRepository participantRepository;
-    private ParticipantFacade participantFacade;
+    private BillFacade billFacade;
 
     @Autowired
     public ParticipantServiceImpl(ParticipantRepository participantRepository,
                                   ParticipantMapper participantMapper,
-                                  ParticipantFacade participantFacade) {
+                                  BillFacade billFacade) {
         this.participantMapper = participantMapper;
         this.participantRepository = participantRepository;
-        this.participantFacade = participantFacade;
+        this.billFacade = billFacade;
     }
 
     @Override
     public ParticipantCreateDto create(ParticipantCreateDto dto) {
-        Bill bill = participantFacade.getBillFacade().getBillByUuid(dto.getBillNumber());
+        Bill bill = billFacade.getBillByUuid(dto.getBillNumber());
         Participant participant = Participant.create()
                 .name(dto.getName())
                 .bill(bill)
                 .build();
         return participantMapper.toParticipantCreateDto(participantRepository.save(participant));
+    }
+
+    @Override
+    public Participant findByUuid(String uuid) {
+        return participantRepository.findByUuid(uuid);
+    }
+
+    @Override
+    public ParticipantDto findByname(String name) {
+        return participantMapper.toParticipantDto(participantRepository.findByName(name));
     }
 
     @Override

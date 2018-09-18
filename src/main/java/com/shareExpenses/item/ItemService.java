@@ -10,5 +10,11 @@ interface ItemService {
 
     ItemDto findOneByUuid(String uuid);
 
+    Set<ItemDto> findAllByBillUuid(String uuid);
+
+    Item findByUuid(String uuid);
+
+    ItemDto findOneByName(String name);
+
     void delete(String uuid);
 }

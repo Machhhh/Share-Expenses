@@ -1,8 +1,5 @@
 package com.shareExpenses.contribution;
 
-import com.shareExpenses.bill.BillFacade;
-import com.shareExpenses.item.ItemFacade;
-import com.shareExpenses.participant.ParticipantFacade;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -12,17 +9,13 @@ import java.util.Set;
 @Getter
 public class ContributionFacade {
 
-    private ContributionRepository contributionRepository;
-    private ContributionMapper contributionMapper;
-    private BillFacade billFacade;
-    private ParticipantFacade participantFacade;
-    private ItemFacade itemFacade;
+    ContributionService contributionService;
 
     public ContributionDto getContributionDtoByUuid(String uuid) {
-        return contributionMapper.toContributionDto(contributionRepository.findByUuid(uuid));
+        return contributionService.findOneByUuid(uuid);
     }
 
     public Set<ContributionDto> getContributionDtoSet() {
-        return contributionMapper.toContributionDtoSet(contributionRepository.findAllBy());
+        return contributionService.findAll();
     }
 }

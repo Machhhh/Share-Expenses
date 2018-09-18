@@ -1,6 +1,5 @@
 package com.shareExpenses.participant;
 
-import com.shareExpenses.bill.BillFacade;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,27 +9,25 @@ import java.util.Set;
 @Getter
 public class ParticipantFacade {
 
-    private ParticipantRepository participantRepository;
-    private ParticipantMapper participantMapper;
-    private BillFacade billFacade;
+    private ParticipantService participantService;
 
     public Participant getParticipantByUuid(String uuid) {
-        return participantRepository.findByUuid(uuid);
+        return participantService.findByUuid(uuid);
     }
 
     public ParticipantDto getParticipantDtoByUuid(String uuid) {
-        return participantMapper.toParticipantDto(participantRepository.findByUuid(uuid));
+        return participantService.findOneByUuid(uuid);
     }
 
     public ParticipantDto getParticipantDtoByName(String name) {
-        return participantMapper.toParticipantDto(participantRepository.findByName(name));
+        return participantService.findByname(name);
     }
 
     public Set<ParticipantDto> getParticipantDtoSet() {
-        return participantMapper.toParticipantDtoSet(participantRepository.findAllBy());
+        return participantService.findAll();
     }
 
     public Set<ParticipantDto> getParticipantDtoSetByBillUuid(String billUuid) {
-        return participantMapper.toParticipantDtoSet(participantRepository.findAllByBill_Uuid(billUuid));
+        return participantService.findAllByBillUuid(billUuid);
     }
 }
