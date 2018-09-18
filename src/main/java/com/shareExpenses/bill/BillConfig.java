@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 class BillConfig {
 
     @Bean
-    public BillFacade billFacade(BillRepository billRepository, BillMapper billMapper) {
-        return new BillFacade(billRepository, billMapper);
+    public BillFacade billFacade(BillService billService) {
+        return new BillFacade(billService);
     }
 }

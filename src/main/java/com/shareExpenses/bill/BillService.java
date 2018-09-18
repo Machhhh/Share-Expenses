@@ -8,7 +8,13 @@ interface BillService {
 
     BillDto findOneByUuid(String uuid);
 
+    Bill findByUuid(String uuid);
+
+    BillDto getBillDtoByName(String name);
+
     BillCreateDto create(BillCreateDto billCreateDto);
+
+    BillDto findByLinkName(String linkName);
 
     void deleteByUuid(String uuid);
 }

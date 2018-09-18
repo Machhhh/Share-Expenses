@@ -1,7 +1,5 @@
 package com.shareExpenses.donation;
 
-import com.shareExpenses.bill.BillFacade;
-import com.shareExpenses.participant.ParticipantFacade;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -11,20 +9,17 @@ import java.util.Set;
 @Getter
 public class DonationFacade {
 
-    private DonationRepository donationRepository;
-    private DonationMapper donationMapper;
-    private BillFacade billFacade;
-    private ParticipantFacade participantFacade;
+    private DonationService donationService;
 
     public DonationDto getDonationDtoByUuid(String uuid) {
-        return donationMapper.toDonationDto(donationRepository.findByUuid(uuid));
+        return donationService.findOneByUuid(uuid);
     }
 
     public Set<DonationDto> getDonationDtoSet() {
-        return donationMapper.toDonationDtoSet(donationRepository.findAllBy());
+        return donationService.findAll();
     }
 
     public Set<DonationDto> getDonationDtoSetByBillUuid(String billUuid) {
-        return donationMapper.toDonationDtoSet(donationRepository.findAllByBill_Uuid(billUuid));
+        return donationService.findAllByBillUuid(billUuid);
     }
 }
