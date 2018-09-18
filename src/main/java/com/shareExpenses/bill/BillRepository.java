@@ -10,7 +10,7 @@ interface BillRepository extends CrudRepository<Bill, Long> {
 
     Bill findByUuid(String uuid);
 
-    Set<Bill> findAllBy();
+    Set<Bill> findAll();
 
     Bill findByName(String name);
 

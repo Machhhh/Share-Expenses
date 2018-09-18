@@ -1,21 +1,21 @@
 package com.shareExpenses.participant;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import com.shareExpenses.bill.BillFacade;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.Set;
 
-@Component
+@AllArgsConstructor
+@Getter
 public class ParticipantFacade {
 
     private ParticipantRepository participantRepository;
     private ParticipantMapper participantMapper;
+    private BillFacade billFacade;
 
-    @Autowired
-    public ParticipantFacade(ParticipantRepository participantRepository,
-                             ParticipantMapper participantMapper) {
-        this.participantRepository = participantRepository;
-        this.participantMapper = participantMapper;
+    public Participant getParticipantByUuid(String uuid) {
+        return participantRepository.findByUuid(uuid);
     }
 
     public ParticipantDto getParticipantDtoByUuid(String uuid) {

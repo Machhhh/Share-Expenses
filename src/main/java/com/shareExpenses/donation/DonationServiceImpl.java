@@ -1,13 +1,12 @@
 package com.shareExpenses.donation;
 
 import com.shareExpenses.bill.Bill;
-import com.shareExpenses.bill.BillFacade;
+import com.shareExpenses.participant.Participant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Set;
-
 
 @Service
 @Transactional
@@ -15,25 +14,28 @@ class DonationServiceImpl implements DonationService {
 
     private DonationMapper donationMapper;
     private DonationRepository donationRepository;
-    private BillFacade billFacade;
+    private DonationFacade donationFacade;
 
     @Autowired
     public DonationServiceImpl(DonationRepository donationRepository,
                                DonationMapper donationMapper,
-                               BillFacade billFacade) {
+                               DonationFacade donationFacade) {
         this.donationMapper = donationMapper;
         this.donationRepository = donationRepository;
-        this.billFacade = billFacade;
+        this.donationFacade = donationFacade;
     }
 
     @Override
-    public DonationCreateDto create(DonationCreateDto donationCreateDto) {
-        Bill bill = billFacade.getBillByUuid(donationCreateDto.getBillNumber());
-        Donation donations = Donation.create()
-                .name(donationCreateDto.getName())
+    public DonationCreateDto create(DonationCreateDto dto) {
+        Bill bill = donationFacade.getBillFacade().getBillByUuid(dto.getBillNumber());
+        Participant participant = donationFacade.getParticipantFacade()
+                .getParticipantByUuid(dto.getParticipantUuid());
+        Donation donation = Donation.create()
                 .bill(bill)
+                .participant(participant)
+                .Amount(dto.getAmount())
                 .build();
-        return donationMapper.toDonationCreateDto(donationRepository.save(donations));
+        return donationMapper.toDonationCreateDto(donationRepository.save(donation));
     }
 
     @Override
@@ -56,4 +58,3 @@ class DonationServiceImpl implements DonationService {
         donationRepository.deleteByUuid(uuid);
     }
 }
-
