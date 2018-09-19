@@ -13,5 +13,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class ReportDto {
 
-    private BigDecimal price;
+    private String takerName;
+    private String obligedName;
+    private BigDecimal debt;
+
 }

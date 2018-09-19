@@ -20,7 +20,12 @@ public class ReportController {
     }
 
     @GetMapping
-    BigDecimal submitParticipant(@RequestParam String uuid) {
-        return reportService.submitParticipant(uuid);
+    BigDecimal submitParticipantContribution(@RequestParam String uuid) {
+        return reportService.submitParticipantContribution(uuid);
+    }
+
+    @GetMapping("/{uuid}")
+    BigDecimal submitParticipantBilans(@RequestParam String uuid) {
+        return reportService.submitParticipantBilans(uuid);
     }
 }
