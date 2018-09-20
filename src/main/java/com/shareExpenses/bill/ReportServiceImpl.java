@@ -58,29 +58,41 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public ReportDto report(String billUuid) {
-        Set<ParticipantDto> participantDtoSet = participantFacade.getParticipantDtoSet();
+        final ReportDto result = new ReportDto();
+        Set<ParticipantDto> participantDtoSet = participantFacade.getParticipantDtoSetByBillUuid(billUuid);
+
         Map<String, BigDecimal> map = new HashMap<>();
-        List<Map.Entry<String, BigDecimal>> entriesSortedByValue = map.entrySet()
-                .stream()
-                .sorted(Comparator.comparing(Map.Entry::getValue))
-                .collect(Collectors.toList());
-        for (ParticipantDto participantDto: participantDtoSet) {
+        for (ParticipantDto participantDto : participantDtoSet) {
             String uuid = participantDto.getUuid();
             BigDecimal bilans = submitParticipantBilans(uuid);
             map.put(uuid, bilans);
         }
-        for (int i = 0; i < entriesSortedByValue.size(); i++) {
-/*            if(entriesSortedByValue.get(i).getValue().equals(new BigDecimal(0))) {
-                entriesSortedByValue.remove(i);
-            }*/
-            int j = 1;
-            entriesSortedByValue.get(entriesSortedByValue.size()-j).getValue().add(entriesSortedByValue.get(i).getValue());
-            entriesSortedByValue.get(i).getValue().subtract(entriesSortedByValue.get(i).getValue());
-            if (entriesSortedByValue.get(entriesSortedByValue.size()-j).getValue().equals(new BigDecimal(0))) {
+
+        List<Map.Entry<String, BigDecimal>> participantsByBalance = map.entrySet()
+                .stream()
+                .sorted((o1, o2) -> o2.getValue().compareTo(o1.getValue()))
+                .collect(Collectors.toList());
+
+        int j = 1;
+        int size = participantsByBalance.size();
+        for (int i = 0; i < participantsByBalance.size(); i++) {
+
+            BigDecimal front = participantsByBalance.get(i).getValue();
+            BigDecimal back = participantsByBalance.get(size - j).getValue();
+
+
+            if (back.abs().compareTo(front.abs()) >= 0) {
+                participantsByBalance.get(i).setValue(BigDecimal.ZERO);
+                participantsByBalance.get(size-j).setValue(back.add(front));
+                result.addSuggestedTransfer(new SuggestedTransfer(participantsByBalance.get(size-j).getKey(), participantsByBalance.get(i).getKey(), front));
+            } else {
+                participantsByBalance.get(i).setValue(front.add(back));
+                participantsByBalance.get(size-j).setValue(BigDecimal.ZERO);
+                result.addSuggestedTransfer(new SuggestedTransfer(participantsByBalance.get(size-j).getKey(), participantsByBalance.get(i).getKey(), back));
                 j++;
+                i--;
             }
         }
-        return new ReportDto();
+        return result;
     }
-
 }

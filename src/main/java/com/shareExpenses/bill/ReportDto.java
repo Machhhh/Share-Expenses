@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,8 +15,13 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class ReportDto {
 
-    private String takerName;
-    private String obligedName;
-    private BigDecimal debt;
+    List<SuggestedTransfer> suggestedTransfers = new ArrayList<>();
+
+
+    void addSuggestedTransfer(SuggestedTransfer suggestedTransfer) {
+        if (suggestedTransfer.getValue().compareTo(BigDecimal.ZERO) != 0) {
+            this.suggestedTransfers.add(suggestedTransfer);
+        }
+    }
 
 }
