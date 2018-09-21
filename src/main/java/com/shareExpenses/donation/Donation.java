@@ -20,8 +20,8 @@ public class Donation extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(unique = true)
-    private BigDecimal Amount;
+    @Column
+    private BigDecimal amount;
     @ManyToOne
     private Participant participant;
     @ManyToOne

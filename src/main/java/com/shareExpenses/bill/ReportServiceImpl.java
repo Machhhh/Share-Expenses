@@ -53,7 +53,7 @@ public class ReportServiceImpl implements ReportService {
         for (Donation donation : donations) {
             totalDonation = totalDonation.add(donation.getAmount());
         }
-        return submitParticipantContribution(uuid).subtract(totalDonation);
+        return totalDonation.subtract(submitParticipantContribution(uuid));
     }
 
     @Override
@@ -88,7 +88,7 @@ public class ReportServiceImpl implements ReportService {
             } else {
                 participantsByBalance.get(i).setValue(front.add(back));
                 participantsByBalance.get(size-j).setValue(BigDecimal.ZERO);
-                result.addSuggestedTransfer(new SuggestedTransfer(participantsByBalance.get(size-j).getKey(), participantsByBalance.get(i).getKey(), back));
+                result.addSuggestedTransfer(new SuggestedTransfer(participantsByBalance.get(size-j).getKey(), participantsByBalance.get(i).getKey(), back.abs()));
                 j++;
                 i--;
             }

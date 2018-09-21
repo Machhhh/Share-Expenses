@@ -33,7 +33,7 @@ class DonationServiceImpl implements DonationService {
         Donation donation = Donation.create()
                 .bill(bill)
                 .participant(participant)
-                .Amount(dto.getAmount())
+                .amount(dto.getAmount())
                 .build();
         return donationMapper.toDonationCreateDto(donationRepository.save(donation));
     }
